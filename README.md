@@ -1,18 +1,18 @@
-# 📚 Document Q&A Bot using RAG
+# 📚 Document Q&A Bot using RAG (Retrieval-Augmented Generation)
 
-A Retrieval-Augmented Generation (RAG) based Question Answering system that enables users to upload PDF and DOCX documents, ask natural language questions, and receive context-aware answers grounded in the uploaded documents.
+A Retrieval-Augmented Generation (RAG) based Question Answering system that enables users to upload PDF and DOCX documents, ask natural language questions, and receive accurate answers grounded in the uploaded content.
 
-The application uses document ingestion, chunking, embeddings, vector search, and Google Gemini to provide accurate answers along with source citations.
+The application extracts document text, chunks it into smaller segments, generates embeddings, retrieves the most relevant information using vector search, and uses Google Gemini to generate context-aware answers with source citations.
 
 ---
 
-## 🚀 Live Demo
+# 🚀 Live Demo
 
-**Streamlit Application**
+### Streamlit Application
 
 https://document-app-bot-rag-dxjmo2v3ajrdgucqgstpg5.streamlit.app/
 
-**GitHub Repository**
+### GitHub Repository
 
 https://github.com/Hemanths7/document-qa-bot-rag
 
@@ -24,25 +24,17 @@ https://github.com/Hemanths7/document-qa-bot-rag
 
 ![Home Page](screenshots/ui-home.png)
 
----
-
-## Uploading Documents
+## Upload Documents
 
 ![Upload Documents](screenshots/upload-doc.png)
-
----
 
 ## Answer Generation
 
 ![Answer Output](screenshots/answer-output.png)
 
----
-
-## Document Indexing
+## Indexing Process
 
 ![Indexing Terminal](screenshots/indexing-terminal.png)
-
----
 
 ## Project Structure
 
@@ -54,13 +46,13 @@ https://github.com/Hemanths7/document-qa-bot-rag
 
 Build a complete Retrieval-Augmented Generation (RAG) pipeline capable of:
 
-* Loading documents
-* Chunking text
-* Generating embeddings
-* Storing embeddings in a vector database
-* Retrieving relevant chunks
-* Generating grounded answers using an LLM
-* Providing source citations
+* Document ingestion
+* Text chunking
+* Embedding generation
+* Vector database storage
+* Semantic retrieval
+* LLM-based answer generation
+* Source citation generation
 
 ---
 
@@ -121,7 +113,7 @@ Similarity Search
 Retrieved Chunks
           │
           ▼
-Google Gemini
+Google Gemini 2.5 Flash
           │
           ▼
 Answer + Citations
@@ -129,37 +121,19 @@ Answer + Citations
 
 ---
 
-# ⚙️ Tech Stack
+# ⚙️ Tech Stack & Versions
 
-### Programming Language
-
-* Python 3.11
-
-### Frontend
-
-* Streamlit
-
-### Vector Database
-
-* ChromaDB
-
-### Embedding Model
-
-* Sentence Transformers
-* all-MiniLM-L6-v2
-
-### Large Language Model
-
-* Google Gemini 2.5 Flash
-
-### Document Processing
-
-* PyPDF
-* python-docx
-
-### Environment Management
-
-* python-dotenv
+| Component             | Version |
+| --------------------- | ------- |
+| Python                | 3.11    |
+| Streamlit             | 1.58.0  |
+| ChromaDB              | 1.5.9   |
+| Sentence Transformers | 5.6.0   |
+| Google GenAI          | 2.9.0   |
+| PyPDF                 | 6.13.3  |
+| python-docx           | 1.2.0   |
+| Torch                 | 2.12.1  |
+| python-dotenv         | 1.2.2   |
 
 ---
 
@@ -173,12 +147,13 @@ The application uses the following documents:
 4. The-Game-of-Cricket.docx
 5. Use of GenAI in research.pdf
 
-These documents provide diverse domains including:
+These documents cover multiple domains:
 
 * Artificial Intelligence
 * Cyber Security
 * Research Methodology
 * Sports
+* AI Governance
 
 ---
 
@@ -195,10 +170,10 @@ chunk_overlap = 200
 
 ### Why This Strategy?
 
-* Preserves contextual information.
-* Prevents information loss at chunk boundaries.
+* Preserves contextual information between chunks.
+* Reduces information loss at chunk boundaries.
 * Improves retrieval quality.
-* Simple and efficient for beginner RAG pipelines.
+* Simple and effective for beginner RAG systems.
 
 ### Metadata Stored
 
@@ -211,18 +186,18 @@ Each chunk stores:
 
 # 🧠 Embedding Model
 
-### Model
+### Model Used
 
 ```text
 all-MiniLM-L6-v2
 ```
 
-### Why?
+### Why This Model?
 
-* Lightweight
-* Fast embedding generation
-* Good semantic similarity performance
-* Popular choice for RAG systems
+* Lightweight and fast
+* Strong semantic similarity performance
+* Popular embedding model for RAG applications
+* Suitable for real-time retrieval systems
 
 ### Batch Embedding
 
@@ -233,7 +208,7 @@ texts = [chunk["text"] for chunk in chunks]
 embeddings = model.encode(texts)
 ```
 
-This improves performance compared to embedding one chunk at a time.
+This improves performance compared to embedding chunks individually.
 
 ---
 
@@ -245,11 +220,7 @@ ChromaDB
 
 ### Why ChromaDB?
 
-* Easy integration with Python
-* Fast similarity search
-* Lightweight
-* Open source
-* Suitable for small and medium RAG projects
+I selected ChromaDB because it is lightweight, open-source, easy to integrate with Python, supports vector similarity search, and is widely used in RAG systems. It provides efficient retrieval and is well-suited for document-based question-answering applications.
 
 ---
 
@@ -261,11 +232,11 @@ Upload PDF or DOCX documents.
 
 ### Step 2
 
-Extract text from uploaded files.
+Extract text from documents.
 
 ### Step 3
 
-Split documents into overlapping chunks.
+Split text into overlapping chunks.
 
 ### Step 4
 
@@ -285,61 +256,61 @@ Generate query embedding.
 
 ### Step 8
 
-Retrieve top-k relevant chunks.
+Retrieve Top-K relevant chunks.
 
 ### Step 9
 
-Send retrieved context and question to Gemini.
+Pass retrieved context and question to Google Gemini.
 
 ### Step 10
 
-Display answer and source citations.
+Generate answer with source citations.
 
 ---
 
 # 🔑 Environment Variables
 
-Create a `.env` file:
+Create a `.env` file in the project root:
 
 ```env
 GEMINI_API_KEY=YOUR_API_KEY
 ```
 
-Get your API Key from Google AI Studio.
+Get your API key from Google AI Studio.
 
 ⚠️ Never commit API keys to GitHub.
 
 ---
 
-# 🛠 Installation
+# 🛠 Installation & Setup
 
-Clone the repository:
+### Clone Repository
 
 ```bash
 git clone https://github.com/Hemanths7/document-qa-bot-rag.git
 ```
 
-Move into the project:
+### Move into Project
 
 ```bash
 cd document-qa-bot-rag
 ```
 
-Create a virtual environment:
+### Create Virtual Environment
 
 ```bash
 python -m venv venv
 ```
 
-Activate environment:
+### Activate Virtual Environment
 
-### Windows
+Windows:
 
 ```bash
 venv\Scripts\activate
 ```
 
-Install dependencies:
+### Install Dependencies
 
 ```bash
 pip install -r requirements.txt
@@ -349,7 +320,7 @@ pip install -r requirements.txt
 
 # ▶ Running the Application
 
-Run Streamlit:
+Launch Streamlit:
 
 ```bash
 streamlit run src/app.py
@@ -365,24 +336,13 @@ http://localhost:8501
 
 # 💡 Example Queries
 
-### AI Research
-
-* What are the uses of Generative AI in research?
-* How can AI support literature reviews?
-
-### Cyber Security
-
-* What is phishing?
-* How can phishing attacks be prevented?
-
-### AI Governance
-
-* What is an AI Risk Management Framework?
-
-### Cricket
-
-* How many players are there in a cricket team?
-* What are the basic rules of cricket?
+| Question                                                 | Expected Theme                           |
+| -------------------------------------------------------- | ---------------------------------------- |
+| What is phishing?                                        | Cyber security attacks and prevention    |
+| How can Generative AI assist research?                   | Literature review, hypothesis generation |
+| What is an AI Risk Management Framework?                 | AI governance and risk controls          |
+| What insights are discussed in the AI Index Report 2025? | AI trends and industry developments      |
+| How many players are there in a cricket team?            | Cricket rules and gameplay               |
 
 ---
 
@@ -397,7 +357,7 @@ What is phishing?
 ### Answer
 
 ```text
-Phishing is a cyber attack where attackers impersonate trusted entities to steal sensitive information such as passwords, banking details, or personal data.
+Phishing is a cyber attack in which attackers impersonate trusted entities to steal sensitive information such as passwords, banking details, or personal information.
 ```
 
 ### Source
@@ -414,22 +374,23 @@ NCSC_Quick_Guide_Phishing.docx (Page 1)
 * Retrieval quality depends on chunk quality.
 * Large documents may increase processing time.
 * Multi-document reasoning can be improved further.
-* Responses depend on the relevance of retrieved chunks.
+* Answers depend on the relevance of retrieved chunks.
+* The application currently supports PDF and DOCX documents only.
 
 ---
 
 # 🎥 Demonstration Video
 
-The project demonstration includes:
+The demonstration video covers:
 
-* Project structure overview
+* Project structure walkthrough
 * Document ingestion
 * Chunking and indexing
-* Streamlit application walkthrough
-* Five sample queries
+* Streamlit application usage
+* Five example queries
 * Source citation display
 * Handling unanswerable questions
-* Technical design explanation
+* Technical design decisions
 
 ---
 
@@ -450,16 +411,18 @@ GitHub: https://github.com/Hemanths7
 # ✅ Assignment Requirements Covered
 
 * Document Ingestion
-* PDF and DOCX Support
+* PDF Support
+* DOCX Support
 * Text Chunking
 * Chunk Overlap
 * Metadata Storage
 * Batch Embeddings
 * ChromaDB Vector Database
 * Similarity Search
+* Retrieval-Augmented Generation
 * Google Gemini Integration
 * Grounded Answer Generation
 * Source Citations
-* Streamlit User Interface
+* Streamlit Web UI
 * Public GitHub Repository
 * Cloud Deployment
