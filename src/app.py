@@ -66,9 +66,19 @@ if uploaded_files:
 
     client_db = chromadb.Client()
 
-    collection = client_db.create_collection(
+    collection = client_db.get_or_create_collection(
         name="uploaded_docs"
     )
+
+    try:
+        existing = collection.get()
+
+        if len(existing["ids"]) > 0:
+            collection.delete(
+                ids=existing["ids"]
+            )
+    except:
+        pass
 
     texts = [
         chunk["text"]
