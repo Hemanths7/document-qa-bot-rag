@@ -6,3 +6,4 @@ python-dotenv
 pypdf
 python-docx
 torch
+protobuf==5.29.6
