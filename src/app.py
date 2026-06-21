@@ -52,15 +52,25 @@ if uploaded_files:
             tmp.write(uploaded_file.getvalue())
             temp_path = tmp.name
 
+        # PDF Processing
         if uploaded_file.name.lower().endswith(".pdf"):
-            all_docs.extend(
-                extract_pdf(temp_path)
-            )
 
+            docs = extract_pdf(temp_path)
+
+            for doc in docs:
+                doc["metadata"]["source"] = uploaded_file.name
+
+            all_docs.extend(docs)
+
+        # DOCX Processing
         elif uploaded_file.name.lower().endswith(".docx"):
-            all_docs.extend(
-                extract_docx(temp_path)
-            )
+
+            docs = extract_docx(temp_path)
+
+            for doc in docs:
+                doc["metadata"]["source"] = uploaded_file.name
+
+            all_docs.extend(docs)
 
     chunks = chunk_documents(all_docs)
 
@@ -71,11 +81,11 @@ if uploaded_files:
     )
 
     try:
-        existing = collection.get()
+        existing_docs = collection.get()
 
-        if len(existing["ids"]) > 0:
+        if len(existing_docs["ids"]) > 0:
             collection.delete(
-                ids=existing["ids"]
+                ids=existing_docs["ids"]
             )
     except:
         pass
@@ -85,7 +95,9 @@ if uploaded_files:
         for chunk in chunks
     ]
 
-    embeddings = model.encode(texts).tolist()
+    embeddings = model.encode(
+        texts
+    ).tolist()
 
     collection.add(
         ids=[
@@ -142,8 +154,7 @@ Context:
 Question:
 {question}
 
-If answer is not present in context,
-say:
+If answer is not present in context, say:
 'I cannot find the answer in the provided documents.'
 """
 
@@ -157,7 +168,15 @@ say:
 
         st.subheader("Sources")
 
+        displayed = set()
+
         for meta in results["metadatas"][0]:
-            st.write(
-                f"{meta['source']} (Page {meta['page']})"
+
+            source_text = (
+                f"{meta['source']} "
+                f"(Page {meta['page']})"
             )
+
+            if source_text not in displayed:
+                st.write(source_text)
+                displayed.add(source_text)
